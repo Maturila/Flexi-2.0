@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import Screen from '../../components/Screen';
 import Button from '../../components/Button';
@@ -25,7 +25,7 @@ const upcomingEvents = [
 ];
 
 export default function HomeScreen() {
-  const navigation = useNavigation();
+  const router = useRouter();
   return (
     <Screen>
       <ScrollView style={styles.scrollView}>
@@ -33,12 +33,12 @@ export default function HomeScreen() {
           <View style={styles.buttonContainer}>
             <Button 
               label="Employee" 
-              onPress={() => {}} 
+              onPress={() => router.push('/employee')} 
               style={styles.button}
             />
             <Button 
               label="Employer" 
-              onPress={() => {}} 
+              onPress={() => router.push('/employer')} 
               style={styles.button}
             />
             <Button 
