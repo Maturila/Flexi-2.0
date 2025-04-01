@@ -43,7 +43,7 @@ export default function HomeScreen() {
             />
             <Button 
               label="Setting Profile" 
-              onPress={() => {}} 
+              onPress={() => router.push('/settings')} 
               style={styles.button}
             />
           </View>

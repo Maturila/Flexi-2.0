@@ -1,9 +1,10 @@
 import React from 'react';
-import { Tabs } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import { TouchableOpacity, View, Text } from 'react-native';
  
 export default function TabLayout() {
+  const router = useRouter();
   return (
     <Tabs
       screenOptions={({ route }) => ({
@@ -19,7 +20,10 @@ export default function TabLayout() {
           </TouchableOpacity>
         ),
         headerRight: () => (
-          <TouchableOpacity style={{ marginRight: 15 }}>
+          <TouchableOpacity 
+            style={{ marginRight: 15 }}
+            onPress={() => router.push('/(tabs)/profile')}
+          >
             <FontAwesome name="user" size={24} color="#fff" />
           </TouchableOpacity>
         ),
@@ -82,12 +86,32 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="settingProfile"
+        name="settings"
         options={{
           title: 'Settings',
           tabBarIcon: ({ color }) => (
             <FontAwesome name="cog" size={24} color={color} />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="paymentHistory"
+        options={{
+          title: 'Payment History',
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="money" size={24} color={color} />
+          ),
+          tabBarButton: () => null, // This hides the tab but keeps the screen accessible
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="user" size={24} color={color} />
+          ),
+          tabBarButton: () => null, // This hides the tab but keeps the screen accessible
         }}
       />
       </Tabs>
