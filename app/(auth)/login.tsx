@@ -4,7 +4,7 @@ import { View, TextInput, StyleSheet, TouchableOpacity, SafeAreaView, Image, Tex
 import { Link } from 'expo-router';
 
 export default function Login() {
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [Email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
@@ -14,7 +14,7 @@ export default function Login() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ mobileNumber: phoneNumber, password }), // Corrected here
+        body: JSON.stringify({ mobileNumber: Email, password }), // Corrected here
       });
 
       const data = await response.json();
@@ -47,9 +47,9 @@ export default function Login() {
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            placeholder="Phone Number"
-            value={phoneNumber}
-            onChangeText={setPhoneNumber}
+            placeholder="Email"
+            value={Email}
+            onChangeText={setEmail}
             placeholderTextColor="#666"
           />
         </View>

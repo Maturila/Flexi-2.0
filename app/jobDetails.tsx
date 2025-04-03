@@ -44,13 +44,12 @@ const jobDetails = {
   status: 'Active'
 };
 
-const InfoSection = ({ title, children }) => (
+const InfoSection = ({ title, children }: { title: string, children: React.ReactNode }) => (
   <View style={styles.section}>
     <Text style={styles.sectionTitle}>{title}</Text>
     {children}
   </View>
 );
-
 const BulletList = ({ items }) => (
   <View style={styles.bulletList}>
     {items.map((item, index) => (

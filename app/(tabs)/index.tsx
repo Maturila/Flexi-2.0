@@ -41,11 +41,7 @@ export default function HomeScreen() {
               onPress={() => router.push('/employer')} 
               style={styles.button}
             />
-            <Button 
-              label="Setting Profile" 
-              onPress={() => router.push('/settings')} 
-              style={styles.button}
-            />
+            
           </View>
 
           <View style={styles.eventsSection}>

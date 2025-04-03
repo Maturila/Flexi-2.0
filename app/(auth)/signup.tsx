@@ -4,13 +4,14 @@ import { Link } from 'expo-router';
 
 export default function Signup() {
   const [formData, setFormData] = useState({
-    password: '',
     name: '',
-    mobileNumber: '',
+    phone: '',
     email: '',
     address: '',
     gender: '',
-    dateOfBirth: ''
+    dob: '',
+    password: '',
+    confirmPassword: '',
   });
 
   const updateField = (field: string, value: string) => {
@@ -19,7 +20,7 @@ export default function Signup() {
 
   const handleSignup = async () => {
     try {
-      const response = await fetch('http://localhost:3000/signup', {
+      const response = await fetch('http://192.168.56.1:3000/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -29,14 +30,13 @@ export default function Signup() {
 
       const data = await response.json();
       if (response.ok) {
-        // Handle successful signup (e.g., navigate to login or show success message)
-        console.log('Signup successful:', data.message);
+        console.log('✅ Signup successful:', data.message);
+        // You can navigate to login screen here if needed
       } else {
-        // Handle errors (e.g., show error message)
-        console.error('Signup error:', data.message);
+        console.error('❌ Signup error:', data.error);
       }
     } catch (error) {
-      console.error('Error during signup:', error);
+      console.error('❌ Error during signup:', error);
     }
   };
 
@@ -54,68 +54,28 @@ export default function Signup() {
         </View>
 
         <View style={styles.form}>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder="Name"
-              value={formData.name}
-              onChangeText={(value) => updateField('name', value)}
-              placeholderTextColor="#666"
-            />
-          </View>
-          
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder="Mobile Number"
-              value={formData.mobileNumber}
-              onChangeText={(value) => updateField('mobileNumber', value)}
-              keyboardType="phone-pad"
-              placeholderTextColor="#666"
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              value={formData.email}
-              onChangeText={(value) => updateField('email', value)}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              placeholderTextColor="#666"
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder="Address"
-              value={formData.address}
-              onChangeText={(value) => updateField('address', value)}
-              placeholderTextColor="#666"
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder="Gender"
-              value={formData.gender}
-              onChangeText={(value) => updateField('gender', value)}
-              placeholderTextColor="#666"
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder="DD/MM/YYYY"
-              value={formData.dateOfBirth}
-              onChangeText={(value) => updateField('dateOfBirth', value)}
-              placeholderTextColor="#666"
-            />
-          </View>
+          {[
+            { placeholder: 'Name', key: 'name' },
+            { placeholder: 'Phone', key: 'phone', keyboardType: 'phone-pad' },
+            { placeholder: 'Email', key: 'email', keyboardType: 'email-address' },
+            { placeholder: 'Address', key: 'address' },
+            { placeholder: 'Gender', key: 'gender' },
+            { placeholder: 'Date of Birth (DD/MM/YYYY)', key: 'dob' },
+            { placeholder: 'Password', key: 'password', secure: true },
+            { placeholder: 'Confirm Password', key: 'confirmPassword', secure: true },
+          ].map(({ placeholder, key, keyboardType, secure }) => (
+            <View style={styles.inputContainer} key={key}>
+              <TextInput
+                style={styles.input}
+                placeholder={placeholder}
+                value={formData[key]}
+                onChangeText={(value) => updateField(key, value)}
+                placeholderTextColor="#666"
+                keyboardType={keyboardType || 'default'}
+                secureTextEntry={secure}
+              />
+            </View>
+          ))}
 
           <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
             <Text style={styles.signupButtonText}>Get Started</Text>
@@ -179,10 +139,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: '#fff',
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 4,
     elevation: 2,
@@ -200,10 +157,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 30,
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
